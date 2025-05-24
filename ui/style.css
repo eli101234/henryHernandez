@@ -153,6 +153,10 @@ footer {
   transform: translate(-50%, 0%);
 }
 
+.video-container{
+  padding: 40px;
+}
+
 .hero-container .header {
   position: absolute;
   height: 100%;
