@@ -28,13 +28,11 @@ function syncPosition() {
         const box2 = document.querySelector(".more-info");
         const rect = box1.getBoundingClientRect();
         box2.style.top = `${rect.bottom - 10}px`; // e.g., place it below box1
+        box2.style.height = '85%'
         box2.style.opacity = '1'
         box2.style.filter = 'blur(0)'
     }
-
 }
-
-//window.addEventListener("transitionend", syncPosition);
 
 // https://www.voanews.com/s?k=Henry+Hernandez
 // https://www.instagram.com/reel/C-4ieE8vnBx/
