@@ -3280,7 +3280,8 @@ video {
 		@media screen and (orientation: portrait) {
 
 			#wrapper > .bg {
-				background-size: auto,								auto,														auto 175%;
+				background-size: auto,								auto,														auto 100%;
+				background-position: 25% 75%;
 			}
 
 		}
