@@ -145,7 +145,7 @@ function renderPaginationControls(totalItems) {
 }
 
 async function initGallery() {
-  const allVideos = await loadCSV('video/videos.csv');
+  allVideos = await loadCSV('video/videos.csv');
   renderPage(allVideos, currentPage);
 }
 
