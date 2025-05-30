@@ -81,6 +81,7 @@ function renderPaginationControls(totalItems) {
     if (currentPage > 1) {
       currentPage--;
       renderPage(allVideos, currentPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
   paginationDiv.appendChild(prevLink);
@@ -102,6 +103,7 @@ function renderPaginationControls(totalItems) {
       e.preventDefault();
       currentPage = i;
       renderPage(allVideos, currentPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     paginationDiv.appendChild(pageLink);
   };
@@ -137,6 +139,7 @@ function renderPaginationControls(totalItems) {
     if (currentPage < pageCount) {
       currentPage++;
       renderPage(allVideos, currentPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
   paginationDiv.appendChild(nextLink);
