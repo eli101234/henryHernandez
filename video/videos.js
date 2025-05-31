@@ -23,6 +23,7 @@ function renderPage(videos, page) {
   const pageItems = videos.slice(start, end);
   pageItems.forEach(video => {
     const card = document.createElement('article');
+      const videoId = video?.id?.trim() ? `<video controls id="${video.id.trim()}">` : '<video controls>'
     if( video.type.trim() === 'iframe'){
       card.innerHTML = `
       <article>
@@ -46,7 +47,7 @@ function renderPage(videos, page) {
           <span class="date">${video.date.trim()}</span>
             <h2>${video.title.trim()}</h2>
         </header>
-          <video controls>
+          ${videoId}
             <source src="${video.video_url.trim()}" type="video/mp4">
               Your browser does not support video playback.
           </video>									

@@ -87,6 +87,13 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="video/videos.js"></script>
+			<script>
+				function seekTo(seconds, videoId) {
+				const video = document.getElementById(videoId);
+				video.currentTime = seconds;
+				video.play(); // optional: starts playing after seeking
+				}
+			</script>
 
 	</body>
 </html>
