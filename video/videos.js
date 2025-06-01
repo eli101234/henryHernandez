@@ -23,7 +23,7 @@ function renderPage(videos, page) {
   const pageItems = videos.slice(start, end);
   pageItems.forEach(video => {
     const card = document.createElement('article');
-      const videoId = video?.id?.trim() ? `<video controls id="${video.id.trim()}">` : '<video controls>'
+      const videoId = video?.id?.trim() && `<video controls id="${video.id.trim()}">` || '<video controls>'
     if( video.type.trim() === 'iframe'){
       card.innerHTML = `
       <article>

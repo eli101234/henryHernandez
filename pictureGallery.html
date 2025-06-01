@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Elements Reference - Massively by HTML5 UP</title>
+		<title>Henry Hernandez Photo Gallery</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -37,7 +37,9 @@
 
 				<!-- Main -->
 					<div id="main">
-						<h1>COMING SOON</h1>
+						<h2>Image Gallery</h2>
+  						<div id="slideshows"></div>
+						</div>
 					</div>
 
 				<!-- Footer -->
@@ -71,6 +73,11 @@
 					</div>
 
 			</div>
+			<!-- Lightbox Modal -->
+			<div id="lightbox" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.9);z-index:1000;justify-content:center;align-items:center;">
+			<img id="lightbox-img" style="max-width:90%;max-height:90%;" />
+			<span onclick="closeLightbox()" style="position:absolute;top:20px;right:30px;font-size:2rem;color:white;cursor:pointer;">&times;</span>
+			</div>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
@@ -80,6 +87,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="images/photoGallery.js"></script>
 
 	</body>
 </html>
