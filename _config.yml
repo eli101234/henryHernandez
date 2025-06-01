@@ -1,0 +1,4 @@
+title: Henry Website
+exclude:
+  - list-images-function
+  - node_modules
