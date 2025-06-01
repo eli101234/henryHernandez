@@ -1,10 +1,10 @@
-import { Dialog } from "@headlessui/react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/router";
-import { useRef, useState } from "react";
-import useKeypress from "react-use-keypress";
-import type { ImageProps } from "../utils/types";
-import SharedModal from "./SharedModal";
+import { Dialog } from '@headlessui/react';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { useRef, useState } from 'react';
+import useKeypress from 'react-use-keypress';
+import type { ImageProps } from '../utils/types';
+import SharedModal from './SharedModal';
 
 export default function Modal({
   images,
@@ -23,7 +23,7 @@ export default function Modal({
   const [curIndex, setCurIndex] = useState(index);
 
   function handleClose() {
-    router.push("/", undefined, { shallow: true });
+    router.push('/', undefined, { shallow: true });
     onClose();
   }
 
@@ -39,17 +39,17 @@ export default function Modal({
         query: { photoId: newVal },
       },
       `/p/${newVal}`,
-      { shallow: true },
+      { shallow: true }
     );
   }
 
-  useKeypress("ArrowRight", () => {
+  useKeypress('ArrowRight', () => {
     if (index + 1 < images.length) {
       changePhotoId(index + 1);
     }
   });
 
-  useKeypress("ArrowLeft", () => {
+  useKeypress('ArrowLeft', () => {
     if (index > 0) {
       changePhotoId(index - 1);
     }

@@ -1,16 +1,16 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
-import Bridge from "../components/Icons/Bridge";
-import Logo from "../components/Icons/Logo";
-import Modal from "../components/Modal";
-import cloudinary from "../utils/cloudinary";
-import getBase64ImageUrl from "../utils/generateBlurPlaceholder";
-import type { ImageProps } from "../utils/types";
-import { useLastViewedPhoto } from "../utils/useLastViewedPhoto";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
+import Bridge from '../components/Icons/Bridge';
+import Logo from '../components/Icons/Logo';
+import Modal from '../components/Modal';
+import cloudinary from '../utils/cloudinary';
+import getBase64ImageUrl from '../utils/generateBlurPlaceholder';
+import type { ImageProps } from '../utils/types';
+import { useLastViewedPhoto } from '../utils/useLastViewedPhoto';
 
 const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   useEffect(() => {
     // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
     if (lastViewedPhoto && !photoId) {
-      lastViewedPhotoRef.current.scrollIntoView({ block: "center" });
+      lastViewedPhotoRef.current.scrollIntoView({ block: 'center' });
       setLastViewedPhoto(null);
     }
   }, [photoId, lastViewedPhoto, setLastViewedPhoto]);
@@ -86,7 +86,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               <Image
                 alt="Next.js Conf photo"
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
-                style={{ transform: "translate3d(0, 0, 0)" }}
+                style={{ transform: 'translate3d(0, 0, 0)' }}
                 placeholder="blur"
                 blurDataURL={blurDataUrl}
                 src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_720/${public_id}.${format}`}
@@ -102,7 +102,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         </div>
       </main>
       <footer className="p-6 text-center text-white/80 sm:p-12">
-        Thank you to{" "}
+        Thank you to{' '}
         <a
           href="https://edelsonphotography.com/"
           target="_blank"
@@ -111,7 +111,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         >
           Josh Edelson
         </a>
-        ,{" "}
+        ,{' '}
         <a
           href="https://www.newrevmedia.com/"
           target="_blank"
@@ -120,7 +120,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         >
           Jenny Morgan
         </a>
-        , and{" "}
+        , and{' '}
         <a
           href="https://www.garysextonphotography.com/"
           target="_blank"
@@ -128,7 +128,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           rel="noreferrer"
         >
           Gary Sexton
-        </a>{" "}
+        </a>{' '}
         for the pictures.
       </footer>
     </>
@@ -140,7 +140,7 @@ export default Home;
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
     .expression(`folder:${process.env.CLOUDINARY_FOLDER}/*`)
-    .sort_by("public_id", "desc")
+    .sort_by('public_id', 'desc')
     .max_results(400)
     .execute();
   let reducedResults: ImageProps[] = [];

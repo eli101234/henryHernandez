@@ -1,21 +1,21 @@
-const learnMoreBtn = document.getElementById("learnMoreBtn");
-learnMoreBtn.addEventListener("click", () => {
-  document.querySelector(".hero-container")?.classList.add("reveal");
-  document.querySelector(".header")?.classList.add("reveal");
-  document?.querySelector(".btn.learnMore")?.classList?.add("hidden");
+const learnMoreBtn = document.getElementById('learnMoreBtn');
+learnMoreBtn.addEventListener('click', () => {
+  document.querySelector('.hero-container')?.classList.add('reveal');
+  document.querySelector('.header')?.classList.add('reveal');
+  document?.querySelector('.btn.learnMore')?.classList?.add('hidden');
 });
-learnMoreBtn.addEventListener("transitionend", () => {
-  document.querySelector(".btn.learnMore.hidden")?.classList.add("gone");
-  syncPosition()
+learnMoreBtn.addEventListener('transitionend', () => {
+  document.querySelector('.btn.learnMore.hidden')?.classList.add('gone');
+  syncPosition();
 });
 
 gsap.registerPlugin(ScrollTrigger);
 
-gsap.from(".scroll-image", {
+gsap.from('.scroll-image', {
   scrollTrigger: {
-    trigger: ".scroll-image",
-    start: "top 80%", // When image top hits 80% of viewport
-    toggleActions: "play none none none",
+    trigger: '.scroll-image',
+    start: 'top 80%', // When image top hits 80% of viewport
+    toggleActions: 'play none none none',
   },
   y: 50,
   opacity: 0,
@@ -23,15 +23,15 @@ gsap.from(".scroll-image", {
 });
 
 function syncPosition() {
-    if (document.querySelector(".hero-container.reveal")){
-        const box1 = document.querySelector(".buttons");
-        const box2 = document.querySelector(".more-info");
-        const rect = box1.getBoundingClientRect();
-        box2.style.top = `${rect.bottom - 10}px`; // e.g., place it below box1
-        box2.style.height = '85%'
-        box2.style.opacity = '1'
-        box2.style.filter = 'blur(0)'
-    }
+  if (document.querySelector('.hero-container.reveal')) {
+    const box1 = document.querySelector('.buttons');
+    const box2 = document.querySelector('.more-info');
+    const rect = box1.getBoundingClientRect();
+    box2.style.top = `${rect.bottom - 10}px`; // e.g., place it below box1
+    box2.style.height = '85%';
+    box2.style.opacity = '1';
+    box2.style.filter = 'blur(0)';
+  }
 }
 
 // https://www.voanews.com/s?k=Henry+Hernandez

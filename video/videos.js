@@ -15,16 +15,18 @@ const itemsPerPage = 6;
 let allVideos = [];
 
 function renderPage(videos, page) {
-  const gallery = document.getElementById("posts");
-  gallery.innerHTML = ""; // Clear previous content
+  const gallery = document.getElementById('posts');
+  gallery.innerHTML = ''; // Clear previous content
 
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const pageItems = videos.slice(start, end);
-  pageItems.forEach(video => {
+  pageItems.forEach((video) => {
     const card = document.createElement('article');
-      const videoId = video?.id?.trim() && `<video controls id="${video.id.trim()}">` || '<video controls>'
-    if( video.type.trim() === 'iframe'){
+    const videoId =
+      (video?.id?.trim() && `<video controls id="${video.id.trim()}">`) ||
+      '<video controls>';
+    if (video.type.trim() === 'iframe') {
       card.innerHTML = `
       <article>
         <header>
@@ -64,19 +66,19 @@ function renderPage(videos, page) {
 }
 
 function renderPaginationControls(totalItems) {
-  const pagination = document.getElementById("pagination");
-  pagination.innerHTML = "";
+  const pagination = document.getElementById('pagination');
+  pagination.innerHTML = '';
 
   const pageCount = Math.ceil(totalItems / itemsPerPage);
-  const paginationDiv = document.createElement("div");
-  paginationDiv.className = "pagination";
+  const paginationDiv = document.createElement('div');
+  paginationDiv.className = 'pagination';
 
   // Prev link
-  const prevLink = document.createElement("a");
-  prevLink.href = "#";
-  prevLink.className = "previous";
-  prevLink.textContent = "Prev";
-  if (currentPage === 1) prevLink.classList.add("disabled");
+  const prevLink = document.createElement('a');
+  prevLink.href = '#';
+  prevLink.className = 'previous';
+  prevLink.textContent = 'Prev';
+  if (currentPage === 1) prevLink.classList.add('disabled');
   prevLink.onclick = (e) => {
     e.preventDefault();
     if (currentPage > 1) {
@@ -90,15 +92,19 @@ function renderPaginationControls(totalItems) {
   // Page number logic
   const delta = 2; // how many pages to show before/after current
   const range = [];
-  for (let i = Math.max(2, currentPage - delta); i <= Math.min(pageCount - 1, currentPage + delta); i++) {
+  for (
+    let i = Math.max(2, currentPage - delta);
+    i <= Math.min(pageCount - 1, currentPage + delta);
+    i++
+  ) {
     range.push(i);
   }
 
   // Always show first
   const addPage = (i) => {
-    const pageLink = document.createElement("a");
-    pageLink.href = "#";
-    pageLink.className = "page" + (i === currentPage ? " active" : "");
+    const pageLink = document.createElement('a');
+    pageLink.href = '#';
+    pageLink.className = 'page' + (i === currentPage ? ' active' : '');
     pageLink.textContent = i;
     pageLink.onclick = (e) => {
       e.preventDefault();
@@ -112,29 +118,29 @@ function renderPaginationControls(totalItems) {
   addPage(1);
 
   if (range[0] > 2) {
-    const span = document.createElement("span");
-    span.className = "extra";
-    span.innerHTML = "&hellip;";
+    const span = document.createElement('span');
+    span.className = 'extra';
+    span.innerHTML = '&hellip;';
     paginationDiv.appendChild(span);
   }
 
   range.forEach(addPage);
 
   if (range[range.length - 1] < pageCount - 1) {
-    const span = document.createElement("span");
-    span.className = "extra";
-    span.innerHTML = "&hellip;";
+    const span = document.createElement('span');
+    span.className = 'extra';
+    span.innerHTML = '&hellip;';
     paginationDiv.appendChild(span);
   }
 
   if (pageCount > 1) addPage(pageCount);
 
   // Next link
-  const nextLink = document.createElement("a");
-  nextLink.href = "#";
-  nextLink.className = "next";
-  nextLink.textContent = "Next";
-  if (currentPage === pageCount) nextLink.classList.add("disabled");
+  const nextLink = document.createElement('a');
+  nextLink.href = '#';
+  nextLink.className = 'next';
+  nextLink.textContent = 'Next';
+  if (currentPage === pageCount) nextLink.classList.add('disabled');
   nextLink.onclick = (e) => {
     e.preventDefault();
     if (currentPage < pageCount) {
