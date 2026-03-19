@@ -120,7 +120,7 @@ video {
 
 /* Slideshow spinner */
 .slideshow {
-  background: #1a1a1a;
+  background: #ffffff;
   position: relative;  /* already set inline in JS, but good to have here */
 }
 
