@@ -39,6 +39,11 @@ function initSlideshow(folder, imageUrls) {
 
   imageUrls.forEach((url, i) => {
     const img = document.createElement('img');
+    if (i < 2) {
+      img.src = url;
+    } else {
+      img.dataset.src = url; // defer the rest
+    }
     img.style = `
             position:absolute;
             top:0;
@@ -71,6 +76,13 @@ function showSlide(folder, index) {
     const isActive = i === index;
     img.style.opacity = isActive ? 1 : 0;
     img.style.pointerEvents = isActive ? 'auto' : 'none';
+
+    // Preload next image when showing current
+    const next = (index + 1) % data.images.length;
+    if (i === next && img.dataset.src) {
+      img.src = img.dataset.src;
+      delete img.dataset.src;
+    }
   });
 }
 
