@@ -3,7 +3,7 @@ const folderToTitle = {
   gradPhotos: 'Graduation Photoshoot',
 };
 const cloudFunctionURL =
-  'https://us-central1-spheric-gasket-461401-a7.cloudfunctions.net/listImages'; // Replace with your actual function URL
+  'https://us-central1-spheric-gasket-461401-a7.cloudfunctions.net/listImages';
 
 folders.forEach((folder) => {
   fetch(`${cloudFunctionURL}?folder=${folder}`)
@@ -13,56 +13,64 @@ folders.forEach((folder) => {
 
       const wrapper = document.createElement('div');
       wrapper.innerHTML = `
-            <h2 style="text-align:center;">${folderToTitle[folder].toUpperCase()}</h2>
-            <div id="slideshow-${folder}" class="slideshow" style="position:relative;height:400px;"></div>
-            <div class="controls">
-              <button onclick="prevSlide('${folder}')">⏮ Prev</button>
-              <button id="btn-${folder}" onclick="toggleSlideshow('${folder}')">⏸ Pause</button>
-              <button onclick="nextSlide('${folder}')">⏭ Next</button>
-            </div>
-          `;
+        <h2 style="text-align:center;">${folderToTitle[folder].toUpperCase()}</h2>
+        <div id="slideshow-${folder}" class="slideshow loading" style="position:relative;height:400px;"></div>
+        <div class="controls">
+          <button onclick="prevSlide('${folder}')">⏮ Prev</button>
+          <button id="btn-${folder}" onclick="toggleSlideshow('${folder}')">⏸ Pause</button>
+          <button onclick="nextSlide('${folder}')">⏭ Next</button>
+        </div>
+      `;
       document.getElementById('slideshows').appendChild(wrapper);
 
       initSlideshow(folder, urls);
     });
 });
 
-const slideshows = {}; // { folder: { index, timer, images } }
+const slideshows = {};
 
 function initSlideshow(folder, imageUrls) {
   const container = document.getElementById(`slideshow-${folder}`);
+
   slideshows[folder] = {
     index: 0,
     timer: null,
     images: [],
+    urls: imageUrls, // store all urls for lazy loading
   };
 
   imageUrls.forEach((url, i) => {
     const img = document.createElement('img');
+    img.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 1s;
+      pointer-events: none;
+    `;
+
+    img.addEventListener('click', () => openLightbox(url));
+
+    // Only eagerly load the first 2 images, defer the rest
     if (i < 2) {
       img.src = url;
     } else {
-      img.dataset.src = url; // defer the rest
+      img.dataset.src = url;
     }
-    img.style = `
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            object-fit:contain;
-            opacity:0;
-            transition:opacity 1s;
-            pointer-events:none;
-        `;
-    img.addEventListener('click', () => {
-      openLightbox(url);
-    });
-    img.src = url;
+
+    // When the first image loads, remove the spinner and show it
     if (i === 0) {
-      img.style.opacity = 1;
-      img.style.pointerEvents = 'auto';
+      img.addEventListener('load', () => {
+        container.classList.remove('loading');
+        img.style.opacity = 1;
+        img.style.pointerEvents = 'auto';
+      });
     }
+
     container.appendChild(img);
     slideshows[folder].images.push(img);
   });
@@ -72,18 +80,20 @@ function initSlideshow(folder, imageUrls) {
 
 function showSlide(folder, index) {
   const data = slideshows[folder];
+
   data.images.forEach((img, i) => {
     const isActive = i === index;
     img.style.opacity = isActive ? 1 : 0;
     img.style.pointerEvents = isActive ? 'auto' : 'none';
-
-    // Preload next image when showing current
-    const next = (index + 1) % data.images.length;
-    if (i === next && img.dataset.src) {
-      img.src = img.dataset.src;
-      delete img.dataset.src;
-    }
   });
+
+  // Preload the next image if it hasn't been loaded yet
+  const nextIndex = (index + 1) % data.images.length;
+  const nextImg = data.images[nextIndex];
+  if (nextImg.dataset.src) {
+    nextImg.src = nextImg.dataset.src;
+    delete nextImg.dataset.src;
+  }
 }
 
 function nextSlide(folder) {
@@ -102,14 +112,10 @@ function prevSlide(folder) {
 
 function resetSlideshowTimer(folder) {
   const data = slideshows[folder];
-
   if (data.timer) {
     clearInterval(data.timer);
   }
-
   data.timer = setInterval(() => nextSlide(folder), 5000);
-
-  // Update play/pause button UI just in case
   const btn = document.getElementById(`btn-${folder}`);
   if (btn) btn.textContent = '⏸ Pause';
 }
@@ -133,14 +139,11 @@ function openLightbox(imageUrl) {
   lightboxImg.src = imageUrl;
   lightbox.style.display = 'flex';
 
-  // 🔥 Stop all active slideshows
   for (const folder in slideshows) {
     const data = slideshows[folder];
     if (data.timer) {
       clearInterval(data.timer);
       data.timer = null;
-
-      // Also update the play/pause button text
       const btn = document.getElementById(`btn-${folder}`);
       if (btn) btn.textContent = '▶ Play';
     }
@@ -150,7 +153,6 @@ function openLightbox(imageUrl) {
 function closeLightbox() {
   document.getElementById('lightbox').style.display = 'none';
 
-  // Optional: auto-resume all slideshows
   for (const folder in slideshows) {
     const data = slideshows[folder];
     if (!data.timer) {
